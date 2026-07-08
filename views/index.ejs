@@ -1,102 +1,108 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
-  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
-  <title>Student List App</title>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+    <title>Student List App</title>
 </head>
 
 <body>
 
-<nav class="navbar navbar-expand-sm bg-dark navbar-dark">
-    <div class="container-fluid">
-        <a class="navbar-brand" href="/">Student List App</a>
+    <nav class="navbar navbar-expand-sm bg-dark navbar-dark">
+        <div class="container-fluid">
+            <a class="navbar-brand" href="/">Student List App</a>
 
-        <button class="navbar-toggler" type="button"
-            data-bs-toggle="collapse"
-            data-bs-target="#collapsibleNavbar">
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#collapsibleNavbar">
 
-            <span class="navbar-toggler-icon"></span>
+                <span class="navbar-toggler-icon"></span>
 
-        </button>
+            </button>
 
-        <div class="collapse navbar-collapse" id="collapsibleNavbar">
+            <div class="collapse navbar-collapse" id="collapsibleNavbar">
 
-            <ul class="navbar-nav">
+                <ul class="navbar-nav">
 
-                <li class="nav-item">
-                    <a class="nav-link" href="/addStudent">Add New Student</a>
-                </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="/addStudent">Add New Student</a>
+                    </li>
 
-            </ul>
+                </ul>
+
+            </div>
 
         </div>
+    </nav>
 
-    </div>
-</nav>
+    <div class="container">
 
-<div class="container">
+        <br>
 
-    <br>
+        <div class="text-center">
+            <h2>Students From Database</h2>
+        </div>
 
-    <div class="text-center">
-        <h2>Students From Database</h2>
-    </div>
+        <br>
 
-    <br>
+        <table class="table table-hover text-center">
 
-    <table class="table table-hover text-center">
-
-        <thead class="table-dark">
-
-            <tr>
-
-                <th>Student Name</th>
-                <th>Student Image</th>
-                <th>Date of Birth</th>
-                <th>Contact Number</th>
-
-            </tr>
-
-        </thead>
-
-        <tbody>
-
-            <% for(let i = 0; i < students.length; i++) { %>
+            <thead class="table-dark">
 
                 <tr>
 
-                    <td>
-                        <a href="/student/<%= students[i].studentId %>">
-                            <%= students[i].studentName %>
-                        </a>
-                    </td>
-
-                    <td>
-                        <img src="<%= students[i].image %>"
-                             width="120"
-                             class="img-thumbnail">
-                    </td>
-
-                    <td>
-                        <%= students[i].dob %>
-                    </td>
-
-                    <td>
-                        <%= students[i].contact %>
-                    </td>
+                    <th>Student Name</th>
+                    <th>Student Image</th>
+                    <th>Date of Birth</th>
+                    <th>Contact Number</th>
+                    <th>Edit</th>
+                    <th>Delete</th>
 
                 </tr>
 
-            <% } %>
+            </thead>
 
-        </tbody>
+            <tbody>
 
-    </table>
+                <% for(let i=0; i < students.length; i++) { %>
 
-</div>
+                    <tr>
+
+                        <td>
+                            <a href="/student/<%= students[i].studentId %>">
+                                <%= students[i].studentName %>
+                            </a>
+                        </td>
+
+                        <td>
+                            <img src="<%= students[i].image %>" width="120" class="img-thumbnail">
+                        </td>
+
+                        <td>
+                            <%= students[i].dob %>
+                        </td>
+
+                        <td>
+                            <%= students[i].contact %>
+                        </td>
+                        <!-- Edit Link -->
+                        <td><a href="/editstudent/<%= students[i].studentId %>">Edit</a></td>
+                        <!-- Delete Link -->
+                        <td><a href="/deletestudent/<%= students[i].studentId %>"
+                                onclick="return confirm('Are you sure you want to delete this student?')">Delete</a>
+                        </td>
+
+                    </tr>
+
+                    <% } %>
+
+            </tbody>
+
+        </table>
+
+    </div>
 
 </body>
+
 </html>
