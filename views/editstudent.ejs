@@ -46,122 +46,106 @@
 
                 <% if (student) { %>
 
-                <div class="card shadow">
+                    <div class="card shadow">
 
-                    <div class="card-header bg-secondary text-white">
-                        <h3 class="mb-0">Update Student</h3>
-                    </div>
+                        <div class="card-header bg-secondary text-white">
+                            <h3 class="mb-0">Update Student</h3>
+                        </div>
 
-                    <div class="card-body">
+                        <div class="card-body">
 
-                        <form action="/editstudent/<%= student.studentId %>" method="POST">
+                            <form action="/editstudent/<%= student.studentId %>" method="POST" enctype="multipart/form-data">
 
-                            <!-- Student Name -->
-                            <div class="mb-3">
-                                <label for="name" class="form-label">
-                                    Student Name
-                                </label>
+                                <!-- Student Name -->
+                                <div class="mb-3">
+                                    <label for="name" class="form-label">
+                                        Student Name
+                                    </label>
 
-                                <input
-                                    type="text"
-                                    class="form-control"
-                                    id="name"
-                                    name="name"
-                                    value="<%= student.studentName %>"
-                                    required>
-                            </div>
+                                    <input type="text" class="form-control" id="name" name="name"
+                                        value="<%= student.studentName %>" required>
+                                </div>
 
-                            <!-- Date of Birth -->
-                            <div class="mb-3">
-                                <label for="dob" class="form-label">
-                                    Date of Birth
-                                </label>
+                                <!-- Date of Birth -->
+                                <div class="mb-3">
+                                    <label for="dob" class="form-label">
+                                        Date of Birth
+                                    </label>
 
-                                <input
-                                    type="date"
-                                    class="form-control"
-                                    id="dob"
-                                    name="dob"
-                                    value="<%= student.dob %>"
-                                    required>
-                            </div>
+                                    <input type="date" class="form-control" id="dob" name="dob"
+                                        value="<%= student.dob %>" required>
+                                </div>
 
-                            <!-- Contact -->
-                            <div class="mb-3">
-                                <label for="contact" class="form-label">
-                                    Contact
-                                </label>
+                                <!-- Contact -->
+                                <div class="mb-3">
+                                    <label for="contact" class="form-label">
+                                        Contact
+                                    </label>
 
-                                <input
-                                    type="text"
-                                    class="form-control"
-                                    id="contact"
-                                    name="contact"
-                                    value="<%= student.contact %>"
-                                    required>
-                            </div>
+                                    <input type="text" class="form-control" id="contact" name="contact"
+                                        value="<%= student.contact %>" required>
+                                </div>
 
-                            <!-- Image URL -->
-                            <div class="mb-3">
-                                <label for="image" class="form-label">
-                                    Image URL
-                                </label>
+                                <!-- Image URL -->
+                                <div class="mb-3">
+                                    <label for="image" class="form-label">
+                                        Image URL
+                                    </label>
 
-                                <input
-                                    type="text"
-                                    class="form-control"
-                                    id="image"
-                                    name="image"
-                                    value="<%= student.image %>"
-                                    required>
-                            </div>
+                                    <input type="text" class="form-control" id="image" name="image"
+                                        value="<%= student.image %>" required>
+                                </div>
 
-                            <!-- Current Image -->
-                            <div class="mb-3">
-                                <label class="form-label">
-                                    Current Image
-                                </label>
+                                <!-- Current Image -->
+                                <div class="mb-3">
+                                    <label class="form-label">
+                                        Current Image
+                                    </label>
 
-                                <div class="text-center">
-                                    <img
+                                    <div class="text-center">
+                                        <!-- <img
                                         src="<%= student.image %>"
                                         alt="<%= student.studentName %>"
                                         class="img-fluid rounded border"
-                                        style="max-height:200px;">
+                                        style="max-height:200px;"> --->
+                                        <input type="text" name="currentImage" class="form-control" value="<%=student.image %>" readonly><br>
+                                        <img src="/images/<%= student.image %>" width="20%"><br><br> New Image:<br>
+                                        <input type="file" class="form-control" id="image" name="image" accept="image/*" value=<%=student.image %>
+                                        ><br><br </div>
+                                    </div>
                                 </div>
-                            </div>
 
-                            <div class="d-grid gap-2">
+                                <div class="d-grid gap-2">
 
-                                <button type="submit" class="btn btn-secondary">
-                                    Update Student
-                                </button>
+                                    <button type="submit" class="btn btn-secondary">
+                                        Update Student
+                                    </button>
 
-                                <a href="/" class="btn btn-secondary">
-                                    Cancel
-                                </a>
+                                    <a href="/" class="btn btn-secondary">
+                                        Cancel
+                                    </a>
 
-                            </div>
+                                </div>
 
-                        </form>
+                            </form>
+
+                        </div>
 
                     </div>
 
-                </div>
+                    <% } else { %>
 
-                <% } else { %>
+                        <div class="alert alert-warning text-center">
 
-                <div class="alert alert-warning text-center">
+                            <h5>No student found.</h5>
 
-                    <h5>No student found.</h5>
+                            <a href="/" class="btn btn-secondary mt-3">
+                                Back to Home
+                            </a>
 
-                    <a href="/" class="btn btn-secondary mt-3">
-                        Back to Home
-                    </a>
+                        </div>
 
-                </div>
-
-                <% } %>
+                        <% } %>
 
             </div>
 

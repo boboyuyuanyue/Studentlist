@@ -1,7 +1,17 @@
 const express = require('express');
 const mysql = require('mysql2');
-
+const multer = require('multer');
 const app = express();
+
+const storage = multer.diskStorage({
+    destination: (req, file, cb) => {
+        cb(null, 'public/images'); // Directory to save uploaded files
+    },
+    filename: (req, file, cb) => {
+        cb(null, file.originalname);
+    }
+});
+const upload = multer({ storage: storage });
 
 // MySQL Connection
 const connection = mysql.createConnection({
@@ -56,16 +66,7 @@ app.get('/', (req, res) => {
 // ================= VIEW STUDENT =================
 app.get('/student/:id', (req, res) => {
 
-    const sql = `
-        SELECT
-            studentId,
-            studentName,
-            DATE_FORMAT(dob,'%Y-%m-%d') AS dob,
-            contact,
-            image
-        FROM student
-        WHERE studentId=?
-    `;
+   const sql = 'SELECT * FROM student WHERE studentId = ?';
 
     connection.query(sql, [req.params.id], (err, results) => {
 
@@ -91,28 +92,32 @@ app.get('/student/:id', (req, res) => {
 });
 
 // ================= ADD PAGE =================
-app.get('/addStudent', (req, res) => {
+app.get('/addStudent', upload.single('image'), (req, res) => {
 
     res.render("addStudent");
 
 });
 
 // ================= ADD =================
-app.post('/addStudent', (req, res) => {
+app.post('/addStudent',upload.single('image'), (req, res) => {
 
-    const { name, dob, contact, image } = req.body;
+    //const { name, dob, contact, image } = req.body;
+    const { name, dob, contact } = req.body;
+    let image;
+    if (req.file) {
+        image = req.file.filename; // Save only the filename
+    } else {
+        image = null;
+    }
 
-    const sql = `
-        INSERT INTO student(studentName,dob,contact,image)
-        VALUES(?,?,?,?)
-    `;
+    const sql = `INSERT INTO student(studentName,dob,contact,image) VALUES(?,?,?,?)`;
 
     connection.query(sql,
         [name, dob, contact, image],
-        (err) => {
+        (error) => {
 
-            if (err) {
-                console.log(err);
+            if (error) {
+                console.log(error);
                 return res.send("Error");
             }
 
@@ -160,9 +165,15 @@ app.get('/editstudent/:id', (req, res) => {
 });
 
 // ================= UPDATE =================
-app.post('/editstudent/:id', (req, res) => {
+app.post('/editstudent/:id', upload.single('image'), (req, res) => {
 
-    const { name, dob, contact, image } = req.body;
+    const { name, dob, contact } = req.body;
+    let image;
+    if (req.file) {
+        image = req.file.filename; // Save only the filename
+    } else {
+        image = null;
+    }
 
     const sql = `
         UPDATE student
@@ -209,7 +220,7 @@ app.get('/deletestudent/:id', (req, res) => {
 });
 
 // ================= START =================
-const PORT = 3000;
+const PORT = 3001;
 
 app.listen(PORT, () => {
     console.log(`Server running on http://localhost:${PORT}`);
